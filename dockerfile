@@ -1,11 +1,13 @@
 FROM php:8.2-apache
 
-# Instala as extensões do PostgreSQL para o PHP
-RUN apt-get update && apt-get install -y libpq-dev \
+RUN apt-get update && apt-get install -y libpq-dev unzip git \
     && docker-php-ext-install pdo pdo_pgsql pgsql
 
-# Copia os arquivos do seu projeto para a pasta pública do Apache
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
 COPY . /var/www/html/
 
-# Dá permissão para o Apache ler os arquivos
+WORKDIR /var/www/html
+RUN composer install --no-dev --optimize-autoloader
+
 RUN chown -R www-data:www-data /var/www/html
