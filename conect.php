@@ -1,20 +1,22 @@
+<?php
+require_once __DIR__ . '/vendor/autoload.php';
 
-    <?php
-        // Credenciais atualizadas para usar o Pooler gratuito (IPv4)
-        $host = "aws-0-sa-east-1.pooler.supabase.com";
-        $port = "6543";
-        $dbname = "postgres";
-        $user = "postgres.vjuwhjvyrlhfqxpjyati"; // Note que leva o ID do seu projeto junto
-        $pass = "Lara2912*2011"; // Coloque aqui a senha do seu banco
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
-        try {
-            $conexao = new PDO(
-                "pgsql:host=$host;port=$port;dbname=$dbname",
-                $user,
-                $pass,
-                [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-            );
-        } catch (PDOException $e) {
-            echo "erro: " . $e->getMessage();
-        }
-    ?>
+$host   = $_ENV['DB_HOST'];
+$port   = $_ENV['DB_PORT'];
+$dbname = $_ENV['DB_NAME'];
+$user   = $_ENV['DB_USER'];
+$pass   = $_ENV['DB_PASS'];
+
+try {
+    $conexao = new PDO(
+        "pgsql:host=$host;port=$port;dbname=$dbname",
+        $user,
+        $pass,
+        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+    );
+} catch (PDOException $e) {
+    echo "erro: " . $e->getMessage();
+}

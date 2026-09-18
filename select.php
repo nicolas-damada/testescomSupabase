@@ -33,7 +33,6 @@
             <input type="text" name="id" id="id">
         </form>
     </main>
-    </main>
     <?php
 require_once 'conect.php';
 
